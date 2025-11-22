@@ -28,8 +28,8 @@
     text-shadow: 2px 2px 5px #000, 0 0 10px #ff3300;
     box-shadow: 0 0 15px #ff3300 inset, 0 0 30px #ff0000;
     line-height: 1.4em;
-    max-width: 90vw;        /* keep counter within screen width */
-    word-wrap: break-word;   /* allow wrapping for long numbers */
+    max-width: 90vw;        /* responsive width */
+    word-wrap: break-word;   /* wrap long numbers */
     text-align: center;
   }
 
@@ -47,3 +47,23 @@
     text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000;
     font-weight: bold;
     animation: pulse 1.5s infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000; }
+    to   { text-shadow: 0 0 15px #ff6600, 0 0 25px #ff3300; }
+  }
+</style>
+</head>
+
+<body>
+
+  <div id="hell-counter">Loading Hell...</div>
+
+  <script>
+    const hellStartDate = new Date("2025-05-22T00:00:00Z");
+    const hellStartDay = 2201940;
+
+    function updateHellCounter() {
+      const now = new Date();
+      const msDiff = now.getTime() - he
