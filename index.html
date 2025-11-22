@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Days in Hell</title>
+
 <style>
   body {
     background-color: #111;
@@ -22,9 +24,16 @@
     color: #ff3300;
     text-shadow: 2px 2px 5px #000, 0 0 10px #ff3300;
     box-shadow: 0 0 15px #ff3300 inset, 0 0 30px #ff0000;
+    line-height: 1.4em;
   }
 
-  /* HST glowing effect */
+  @media (max-width: 600px) {
+    #hell-counter {
+      font-size: 2.3em;
+      padding: 1.2em;
+    }
+  }
+
   #hell-counter span.hst {
     color: #ff6600;
     text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000;
@@ -39,29 +48,37 @@
 </style>
 </head>
 <body>
+
   <div id="hell-counter">Loading Hell...</div>
+
   <script>
-    const hellStartDate = new Date("2025-05-22T00:00:00Z");
-    const hellStartDay = 2201940;
+    document.addEventListener("DOMContentLoaded", () => {
+      const hellStartDate = new Date("2025-05-22T00:00:00Z");
+      const hellStartDay = 2201940;
 
-    function updateHellCounter() {
-      const now = new Date();
-      const msDiff = now.getTime() - hellStartDate.getTime();
-      const totalSeconds = Math.floor(msDiff / 1000);
-      const totalDays = Math.floor(totalSeconds / (60*60*24));
-      const secondsToday = totalSeconds % (60*60*24);
-      const hours = Math.floor(secondsToday/3600);
-      const minutes = Math.floor((secondsToday%3600)/60);
-      const seconds = secondsToday%60;
-      const hellDay = hellStartDay + totalDays;
-      const pad = (n) => n.toString().padStart(2,'0');
-      
-      document.getElementById("hell-counter").innerHTML =
-        `It is Day ${hellDay.toLocaleString()} in Hell – ${pad(hours)}:${pad(minutes)}:${pad(seconds)} <span class="hst">HST</span> 🔥`;
-    }
+      function updateHellCounter() {
+        const now = new Date();
+        const msDiff = now.getTime() - hellStartDate.getTime();
+        const totalSeconds = Math.floor(msDiff / 1000);
+        const totalDays = Math.floor(totalSeconds / (60 * 60 * 24));
+        const secondsToday = totalSeconds % (60 * 60 * 24);
 
-    updateHellCounter();
-    setInterval(updateHellCounter, 1000);
+        const hours = Math.floor(secondsToday / 3600);
+        const minutes = Math.floor((secondsToday % 3600) / 60);
+        const seconds = secondsToday % 60;
+
+        const hellDay = hellStartDay + totalDays;
+        const pad = (n) => n.toString().padStart(2, '0');
+
+        document.getElementById("hell-counter").innerHTML =
+          `It is Day ${hellDay.toLocaleString()} in Hell<br>` +
+          `🔥 ${pad(hours)}:${pad(minutes)}:${pad(seconds)} <span class="hst">HST</span> 🔥`;
+      }
+
+      updateHellCounter();
+      setInterval(updateHellCounter, 1000);
+    });
   </script>
+
 </body>
 </html>
