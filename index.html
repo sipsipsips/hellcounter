@@ -5,41 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Days in Hell</title>
 <style>
-body {
-  background-color: #111;
-  color: white;
-  text-align: center;
-  padding-top: 50px;
-  font-family: sans-serif;
-}
-#hell-counter {
-  background: linear-gradient(to right, #330000, #660000);
-  padding: 1em;
-  border-radius: 8px;
-  display: inline-block;
-  font-family: monospace;
-  font-size: 1.5em;
-  color: #ff3300;
-  text-shadow: 2px 2px 5px #000, 0 0 10px #ff3300;
-  box-shadow: 0 0 15px #ff3300 inset, 0 0 30px #ff0000;
-  line-height: 1.4em;
-  max-width: 90vw;
-  word-wrap: break-word;
-  text-align: center;
-}
-@media (max-width: 600px) {
-  #hell-counter { font-size: 2.3em; padding: 1.2em; }
-}
-#hell-counter span.hst {
-  color: #ff6600;
-  text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000;
-  font-weight: bold;
-  animation: pulse 1.5s infinite alternate;
-}
-@keyframes pulse {
-  from { text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000; }
-  to   { text-shadow: 0 0 15px #ff6600, 0 0 25px #ff3300; }
-}
+  body {
+    background-color: #111;
+    color: white;
+    text-align: center;
+    padding-top: 50px;
+    font-family: sans-serif;
+  }
+
+  #hell-counter {
+    background: linear-gradient(to right, #330000, #660000);
+    padding: 1em;
+    border-radius: 8px;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 1.5em;
+    color: #ff3300;
+    text-shadow: 2px 2px 5px #000, 0 0 10px #ff3300;
+    box-shadow: 0 0 15px #ff3300 inset, 0 0 30px #ff0000;
+  }
+
+  /* HST glowing effect */
+  #hell-counter span.hst {
+    color: #ff6600;
+    text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000;
+    font-weight: bold;
+    animation: pulse 1.5s infinite alternate;
+  }
+
+  @keyframes pulse {
+    from { text-shadow: 0 0 5px #ff3300, 0 0 10px #ff0000; }
+    to   { text-shadow: 0 0 15px #ff6600, 0 0 25px #ff3300; }
+  }
+
+  /* Make counter slightly larger on small screens */
+  @media (max-width: 600px) {
+    #hell-counter {
+      font-size: 2em;
+      padding: 1.2em;
+    }
+  }
 </style>
 </head>
 <body>
@@ -47,31 +52,29 @@ body {
 <div id="hell-counter">Loading Hell...</div>
 
 <script>
-const hellStartDate = new Date("2025-05-22T00:00:00Z");
-const hellStartDay = 2201940;
+  const hellStartDate = new Date("2025-05-22T00:00:00Z");
+  const hellStartDay = 2201940;
 
-function pad(n){return n.toString().padStart(2,'0');}
+  function updateHellCounter() {
+    const now = new Date();
+    const msDiff = now.getTime() - hellStartDate.getTime();
+    const totalSeconds = Math.floor(msDiff / 1000);
+    const totalDays = Math.floor(totalSeconds / (60*60*24));
+    const secondsToday = totalSeconds % (60*60*24);
 
-function updateHellCounter(){
-  const now = new Date();
-  const msDiff = now.getTime() - hellStartDate.getTime();
-  const totalSeconds = Math.floor(msDiff / 1000);
-  const totalDays = Math.floor(totalSeconds / (60*60*24));
-  const secondsToday = totalSeconds % (60*60*24);
+    const hours = Math.floor(secondsToday / 3600);
+    const minutes = Math.floor((secondsToday % 3600) / 60);
+    const seconds = secondsToday % 60;
 
-  const hours = Math.floor(secondsToday/3600);
-  const minutes = Math.floor((secondsToday%3600)/60);
-  const seconds = secondsToday%60;
+    const hellDay = hellStartDay + totalDays;
+    const pad = (n) => n.toString().padStart(2,'0');
 
-  const hellDay = hellStartDay + totalDays;
+    document.getElementById("hell-counter").innerHTML =
+      `It is Day ${hellDay.toLocaleString()} in Hell – ${pad(hours)}:${pad(minutes)}:${pad(seconds)} <span class="hst">HST</span> 🔥`;
+  }
 
-  document.getElementById("hell-counter").innerHTML =
-    `It is Day<br>${hellDay.toLocaleString()} in Hell<br>` +
-    `🔥 ${pad(hours)}:${pad(minutes)}:${pad(seconds)} <span class="hst">HST</span> 🔥`;
-}
-
-updateHellCounter();
-setInterval(updateHellCounter, 1000);
+  updateHellCounter();
+  setInterval(updateHellCounter, 1000);
 </script>
 
 </body>
