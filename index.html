@@ -19,12 +19,12 @@
     border-radius: 8px;
     display: inline-block;
     font-family: monospace;
-    font-size: 1.5em;       /* Keep text size fixed */
+    font-size: 1.5em;       /* text size stays fixed */
     color: #ff3300;
     text-shadow: 2px 2px 5px #000, 0 0 10px #ff3300;
     box-shadow: 0 0 15px #ff3300 inset, 0 0 30px #ff0000;
-    width: 90%;             /* Responsive box width */
-    max-width: 600px;       /* Optional: prevent box from getting too wide on large screens */
+    width: 90%;             /* responsive width for phones */
+    max-width: 450px;       /* limits box width on large screens */
     text-align: center;
   }
 
@@ -50,18 +50,18 @@
 const hellStartDate = new Date("2025-05-22T00:00:00Z");
 const hellStartDay = 2201940;
 
-function pad(n){ return n.toString().padStart(2,'0'); }
+function pad(n) { return n.toString().padStart(2,'0'); }
 
-function updateHellCounter(){
+function updateHellCounter() {
   const now = new Date();
   const msDiff = now.getTime() - hellStartDate.getTime();
   const totalSeconds = Math.floor(msDiff / 1000);
   const totalDays = Math.floor(totalSeconds / (60*60*24));
   const secondsToday = totalSeconds % (60*60*24);
 
-  const hours = Math.floor(secondsToday/3600);
-  const minutes = Math.floor((secondsToday%3600)/60);
-  const seconds = secondsToday%60;
+  const hours = Math.floor(secondsToday / 3600);
+  const minutes = Math.floor((secondsToday % 3600) / 60);
+  const seconds = secondsToday % 60;
 
   const hellDay = hellStartDay + totalDays;
 
